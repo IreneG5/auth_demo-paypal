@@ -129,3 +129,11 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'accounts.backends.EmailAuth',
 )
+
+# Stripe environment variables
+STRIPE_PUBLISHABLE = os.getenv('STRIPE_PUBLISHABLE', 'pk_test_OpRQZ3o7o9v2yto7Jw6cArVc')
+STRIPE_SECRET = os.getenv('STRIPE_SECRET', 'sk_test_bG9I6EM634REVzDMQAs5fEvk')
+
+STATICFILES_DIRS = (
+   os.path.join(BASE_DIR, "static"),
+)
