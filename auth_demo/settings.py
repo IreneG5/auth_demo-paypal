@@ -126,7 +126,7 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'accounts.User'
 
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
+    #'django.contrib.auth.backends.ModelBackend',
     'accounts.backends.EmailAuth',
 )
 
