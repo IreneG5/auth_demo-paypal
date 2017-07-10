@@ -13,6 +13,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from models import User
+from django.utils import timezone
 
 stripe.api_key = settings.STRIPE_SECRET
 
@@ -37,23 +38,26 @@ def register(request):
                     card=form.cleaned_data['stripe_id'],  # this is currently the card token/id
                     plan='REG_MONTHLY',
                 )
-                #if customer.paid:
-                    #form.save()
-                    #user = auth.authenticate(email=request.POST.get('email'),
-                                             #password=request.POST.get('password1'))
+                # For a single payment
+                # if customer.paid:
+                    # form.save()
+                    # user = auth.authenticate(email=request.POST.get('email'),
+                                             # password=request.POST.get('password1'))
 
                 if customer:
                     user = form.save()
                     user.stripe_id = customer.id
-                    user.subscription_end = arrow.now().replace(weeks=+4).datetime
+                    user.subscription_end = arrow.now().datetime
                     user.save()
 
                     if user:
                         auth.login(request, user)
                         messages.success(request, "You have successfully registered")
-                        messages.info(request, "Your customer details are: ")
-                        messages.info(request, customer)
+                        # messages.info(request, customer)
+                        print (customer)
+                        # shows profile page but does not change url
                         return render(request, 'profile.html', {'customer': customer})
+                        # redirect to profile page but can't send message
                         #  return redirect(reverse('profile'), {'customer': customer})
                     else:
                         messages.error(request, "unable to log you in at this time!")
@@ -83,9 +87,13 @@ def login(request):
                                      password=request.POST.get('password'))
 
             if user is not None:
-                auth.login(request, user)
-                messages.error(request, "You have successfully logged in")
-                return redirect(reverse('profile'))
+                # Added my admin email. As I'm not a customer (don't have subscription_end field, I can't log in.
+                if user.subscription_end > timezone.now() or user.email == "irene.g5555@gmail.com":
+                    auth.login(request, user)
+                    messages.error(request, "You have successfully logged in")
+                    return redirect(reverse('profile'))
+                else:
+                    messages.error(request, "You are unable to login because your subscription has ended")
             else:
                 form.add_error(None, "Your email or password was not recognised")
 

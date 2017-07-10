@@ -1,4 +1,6 @@
 from models import User
+from django.utils import timezone
+from django.contrib import messages
 
 
 class EmailAuth(object):
@@ -9,7 +11,7 @@ class EmailAuth(object):
         try:
             user = User.objects.get(email=email)
             if user.check_password(password):
-                return user
+                    return user
 
         except User.DoesNotExist:
             return None

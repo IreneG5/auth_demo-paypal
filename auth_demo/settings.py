@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'hello',
     'accounts',
     'django_forms_bootstrap',
+    'paypal.standard.ipn',
+    'paypal_store',
+    'products',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +140,8 @@ STRIPE_SECRET = os.getenv('STRIPE_SECRET', 'sk_test_bG9I6EM634REVzDMQAs5fEvk')
 STATICFILES_DIRS = (
    os.path.join(BASE_DIR, "static"),
 )
+
+# PayPal Settings
+SITE_URL = 'http://127.0.0.1:8000'
+PAYPAL_NOTIFY_URL = 'http://127.0.0.1/a-very-hard-to-guess-url/'
+PAYPAL_RECEIVER_EMAIL = '<your paypal merchant email goes here>'
