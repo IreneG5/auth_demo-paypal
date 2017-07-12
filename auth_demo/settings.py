@@ -129,7 +129,7 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'accounts.User'
 
 AUTHENTICATION_BACKENDS = (
-    #'django.contrib.auth.backends.ModelBackend',
+    'django.contrib.auth.backends.ModelBackend',
     'accounts.backends.EmailAuth',
 )
 
@@ -144,4 +144,4 @@ STATICFILES_DIRS = (
 # PayPal Settings
 SITE_URL = 'http://127.0.0.1:8000'
 PAYPAL_NOTIFY_URL = 'http://127.0.0.1/a-very-hard-to-guess-url/'
-PAYPAL_RECEIVER_EMAIL = '<your paypal merchant email goes here>'
+PAYPAL_RECEIVER_EMAIL = 'irene.g5555-facilitator@gmail.com'
